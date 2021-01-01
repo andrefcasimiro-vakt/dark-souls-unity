@@ -23,8 +23,8 @@ namespace RPG
         private Weapon rightWeapon;
 
         // The instatiated prefabs of each weapon
-        private GameObject leftWeaponInstance;
-        private GameObject rightWeaponInstance;
+        public GameObject leftWeaponInstance;
+        public GameObject rightWeaponInstance;
 
         public Weapon RightWeapon
         {
@@ -88,6 +88,8 @@ namespace RPG
             InstantiateWeapon(targetHandEnum, weapon);
 
             HandleAnimator();
+
+            DisableWeaponHitboxes();
         }
 
         void InstantiateWeapon(HandEnum targetHandEnum, Weapon weapon)
@@ -152,6 +154,34 @@ namespace RPG
         public bool IsRightHanding()
         {
             return rightWeapon != null && leftWeapon == null;
+        }
+
+        public void EnableWeaponHitboxes()
+        {
+            if (leftWeaponInstance != null)
+            {
+                WeaponHitbox leftWeaponHitbox = leftWeaponInstance.gameObject.GetComponentsInChildren<WeaponHitbox>()[0];
+                leftWeaponHitbox.Enable();
+            }
+            if (rightWeaponInstance != null)
+            {
+                WeaponHitbox rightWeaponHitbox = rightWeaponInstance.gameObject.GetComponentsInChildren<WeaponHitbox>()[0];
+                rightWeaponHitbox.Enable();
+            }
+        }
+
+        public void DisableWeaponHitboxes()
+        {
+            if (leftWeaponInstance != null)
+            {
+                WeaponHitbox leftWeaponHitbox = leftWeaponInstance.gameObject.GetComponentsInChildren<WeaponHitbox>()[0];
+                leftWeaponHitbox.Disable();
+            }
+            if (rightWeaponInstance != null)
+            {
+                WeaponHitbox rightWeaponHitbox = rightWeaponInstance.gameObject.GetComponentsInChildren<WeaponHitbox>()[0];
+                rightWeaponHitbox.Disable();
+            }
         }
 
         public delegate void OnWeaponEquippedDelegate(Weapon equippedWeapon);
